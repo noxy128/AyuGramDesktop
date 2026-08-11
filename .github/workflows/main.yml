@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-24.04
     container:
       image: ghcr.io/telegramdesktop/tdesktop/centos_env:latest
+      options: --user root # Принудительно даем права для совместимости с GitHub Actions
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -15,7 +16,8 @@ jobs:
 
       - name: Build AyuGram
         run: |
-          # Запуск официального скрипта сборки внутри подготовленного контейнера
+          # Переходим в рабочую директорию и запускаем официальный скрипт сборки
+          cd $GITHUB_WORKSPACE
           /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh
         continue-on-error: true
 
